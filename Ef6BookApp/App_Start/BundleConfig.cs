@@ -26,6 +26,14 @@ namespace Ef6BookApp
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            //-------------------------------------------------------------------
+            //My additions
+
+            bundles.Add(new ScriptBundle("~/bundles/bookapp").Include(
+                "~/Scripts/loggingDisplay.js", 
+                "~/Scripts/booklist.js"
+                ));
         }
     }
 }

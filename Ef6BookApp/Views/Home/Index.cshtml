@@ -1,31 +1,92 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model ServiceLayer.BookServices.BookListCombinedDto
+@{
+    ViewData["Title"] = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<form id="sort-filter-form" class="form-horizontal">
+    <div class="form-group">
+        <div class="col-sm-3">
+            <label class="control-label">Sort By</label>
+            @Html.EnumDropDownListFor(x => x.SortFilterPageData.OrderByOptions, null,
+                new { @class = "form-control sort-filter-width", onchange = "BookList.sendForm(this)" })
+        </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <div class="col-sm-3">
+            <label class="control-label">Filter Type</label>
+            @Html.EnumDropDownListFor(x => x.SortFilterPageData.FilterBy, null,
+                new { @class = "form-control sort-filter-width", onchange = "BookList.sendForm(this)" })
+        </div>
+
+        @*<div class="col-sm-3 dim-filter-value" id="filter-value-group">
+            <label class="control-label">Filter By</label>
+            <select asp-for="SortFilterPageData.FilterValue" name="FilterValue"
+                    id="filter-value-dropdown"
+                    class="form-control sort-filter-width"
+                    disabled
+                    onchange="BookList.sendForm(this)">
+                <option>Select filter type...</option>
+            </select>
+        </div>*@
+
+        <div class="col-sm-2">
+            <label class="control-label">Page</label>
+            <div>
+                @Html.EditorFor(x => x.SortFilterPageData.PageNum, new { htmlAttributes =
+                    new { @class = "form-control page-control-width page-num-input", onchange = "BookList.sendForm(this)" }
+           })
+                <span class="num-pages-text">of @Model.SortFilterPageData.NumPages</span>
+            </div>
+        </div>
+        
+        
+
+        <div class="col-sm-1">
+            <label class="control-label">Page&nbsp;Size</label>
+        @Html.DropDownListFor(m => m.SortFilterPageData.PageSize, 
+            Model.SortFilterPageData.PageSizes.Select(x => 
+                new SelectListItem { Text = x.ToString(), Value = x.ToString(), Selected = Model.SortFilterPageData.PageSize == x }),
+            new { @class="form-control page-control-width", onchange="BookList.sendForm(this)" })
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+    <input id="PrevCheckState" name="PrevCheckState" type="hidden" value=@Model.SortFilterPageData.PrevCheckState>
+    @*@Html.Hidden("PrevCheckState", @Model.SortFilterPageData.PrevCheckState) -- this didn't work for some reason*@
+</form>
+<br />
+
+<table class="table">
+    @foreach (var item in Model.BooksList)
+    {
+        <tr>
+            <td>
+                <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+                <div>
+                    <small>by</small>&nbsp;@Html.DisplayFor(m => item.AuthorsOrdered)
+                </div>
+                <div>
+                    @(item.ReviewsCount == 0 ? "Be the first to review this book" : $"Votes: {item.ReviewsAverageVotes:F1} by {item.ReviewsCount} customers")
+                </div>
+                <div>
+                    <span class="h4">@(item.ActualPrice < 0 ? "- not for sale - " : $"Price: ${item.ActualPrice:F}")</span>
+                    @if (item.PromotionPromotionalText != null)
+                    {
+                        <span class="text-danger">
+                            <strong >&nbsp;<del>$@($"{item.Price:F}")</del>&nbsp;<i>@(item.PromotionPromotionalText)</i></strong>
+                        </span>
+                    }                    
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
+@section Scripts{
+
+    <script type='text/javascript'>
+        document.addEventListener("DOMContentLoaded",
+            function(event) {
+                BookList.initialise('@Model.SortFilterPageData.FilterBy', '@Model.SortFilterPageData.FilterValue',
+                    '@Url.Action("GetFilterSearchContent")');
+            });
+    </script>
+}

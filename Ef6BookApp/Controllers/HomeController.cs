@@ -3,14 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DataLayer.EfCode;
+using ServiceLayer.BookServices;
+using ServiceLayer.BookServices.Concrete;
 
 namespace Ef6BookApp.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(SortFilterPageOptions options)
         {
-            return View();
+            var listService =
+                new ListBooksService(new EfCoreContext());
+
+            var bookList = listService     
+                .SortFilterPage(options)
+                .ToList();
+
+            return View(new BookListCombinedDto
+                (options, bookList));
         }
 
         public ActionResult About()
