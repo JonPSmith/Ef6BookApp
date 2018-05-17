@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ef6BookApp", "Ef6BookApp\Ef6BookApp.csproj", "{110F28B2-0749-455C-AF9A-B7E488FD0391}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{A7FEDB35-F6E6-4BC2-A718-1B0261A02276}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{7DF35FBD-1415-4399-BCCB-8A3896BCDE9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{110F28B2-0749-455C-AF9A-B7E488FD0391}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{110F28B2-0749-455C-AF9A-B7E488FD0391}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{110F28B2-0749-455C-AF9A-B7E488FD0391}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7FEDB35-F6E6-4BC2-A718-1B0261A02276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7FEDB35-F6E6-4BC2-A718-1B0261A02276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7FEDB35-F6E6-4BC2-A718-1B0261A02276}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7FEDB35-F6E6-4BC2-A718-1B0261A02276}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DF35FBD-1415-4399-BCCB-8A3896BCDE9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DF35FBD-1415-4399-BCCB-8A3896BCDE9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DF35FBD-1415-4399-BCCB-8A3896BCDE9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DF35FBD-1415-4399-BCCB-8A3896BCDE9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
