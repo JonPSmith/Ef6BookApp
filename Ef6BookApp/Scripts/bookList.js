@@ -8,7 +8,7 @@
  * Written by Jon Smith : GitHub JonPSmith, www.thereformedprogrammer.net
  **********************************************************************/
 
-var BookList = (function($, loggingDisplay) {
+var BookList = (function($) {
     'use strict';
 
     var filterApiUrl = null;
@@ -34,11 +34,7 @@ var BookList = (function($, loggingDisplay) {
                 url: filterApiUrl,
                 data: { FilterBy: filterByValue }
             })
-                .done(function(indentAndResult) {
-                    if (!ignoreTrace) {
-                        //Only update the looging if not the main load
-                        loggingDisplay.newTrace(indentAndResult.traceIdentifier, indentAndResult.numLogs);
-                    }
+                .done(function(result) {
                     //This removes the existing dropdownlist options
                     $fsearch
                         .find('option')
@@ -48,16 +44,16 @@ var BookList = (function($, loggingDisplay) {
                             .attr('value', '')
                             .text('Select filter...'));
 
-                    indentAndResult.result.forEach(function (arrayElem) {
-                        $fsearch.append($("<option></option>")
-                            .attr("value", arrayElem.value)
-                            .text(arrayElem.text));
+                    result.forEach(function (arrayElem) {
+                        $fsearch.append($('<option></option>')
+                            .attr('value', arrayElem.Value)
+                            .text(arrayElem.Text));
                     });
                     $fsearch.val(filterValue);
                     enableDisableFilterDropdown($fsearch, true);
                 })
                 .fail(function() {
-                    alert("error");
+                    alert('error');
                 });
         }
     }
@@ -71,7 +67,7 @@ var BookList = (function($, loggingDisplay) {
     return {
         initialise: function(filterByValue, filterValue, exFilterApiUrl) {
             filterApiUrl = exFilterApiUrl;
-            loadFilterValueDropdown(filterByValue, filterValue, true);
+            loadFilterValueDropdown(filterByValue, filterValue);
         },
 
         sendForm: function(inputElem) {
@@ -91,4 +87,4 @@ var BookList = (function($, loggingDisplay) {
         }
     };
 
-}(window.jQuery, LoggingDisplay));
+}(window.jQuery));

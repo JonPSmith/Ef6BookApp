@@ -35,7 +35,7 @@ namespace Ef6BookApp.Controllers
                 BookFilterDropdownService(new EfCoreContext());
 
             return Json(service.GetFilterDropDownValues(    
-                        options.FilterBy));            
+                        options.FilterBy), JsonRequestBehavior.AllowGet);            
         }
 
         public ActionResult About()

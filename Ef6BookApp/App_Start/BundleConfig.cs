@@ -31,9 +31,7 @@ namespace Ef6BookApp
             //My additions
 
             bundles.Add(new ScriptBundle("~/bundles/bookapp").Include(
-                "~/Scripts/loggingDisplay.js", 
-                "~/Scripts/booklist.js"
-                ));
+                "~/Scripts/booklist.js"));
         }
     }
 }
